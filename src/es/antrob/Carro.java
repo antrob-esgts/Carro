@@ -12,7 +12,7 @@ package es.antrob;
  */
 public class Carro {
 	
-	static private final double consumo=5.5; // litros por 100 klm
+	static private final double CONSUMO=5.5; // litros por 100 km
 	
 	private double quantidadeCombustivel;	// quantidade de combustível no depósito (unidade litros)
 	private double capacidadeDeposito;		// capacidade do depósito em termos de combustível (unidade litros)
@@ -42,7 +42,7 @@ public class Carro {
 	 * @return retorna o número de litros gastos por cada 100 Klm
 	 */
 	public static double getConsumo() {
-		return consumo;
+		return CONSUMO;
 	}
 
 	/**
@@ -74,14 +74,28 @@ public class Carro {
 	 * definindo a quantidade a abastecer 
 	 *  
 	 * @param quantidade - número de litros a introduzir no depósito
+	 * @return retorna a quantidade de litros metida no depósito
 	 */
-	public void meterCombustivel( double quantidade) { 		
+	public double meterCombustivel( double quantidade) { 		
 		
 		// Devia testar se Transborda o depósito
 		// Podia retornar os Litros Metidos 
-		quantidadeCombustivel = quantidadeCombustivel + quantidade;
+		//quantidadeCombustivel = quantidadeCombustivel + quantidade;
 		
 		
+		// Código dado por Cortesia de Diogo Pereira 
+		double litrosMetidos = 0;
+		// Devia testar se Transborda o depósito
+		// Podia retornar os Litros Metidos 
+		if(quantidadeCombustivel > capacidadeDeposito)
+			System.out.println("Socorroooooooooooo vai transbordar.");
+		else {
+			quantidadeCombustivel = quantidadeCombustivel + quantidade;
+			litrosMetidos += quantidade;
+		}
+		
+		return litrosMetidos;
+	
 	}
 	
 	
@@ -109,21 +123,23 @@ public class Carro {
 	 * 
 	 * @param distancia números de klm a percorrer com o carro
 	 *  
-	 * @return retorna se conseguiu percorrer a distancia ou não
+	 * @return retornar a distância realmente percorrida
 	 */
-	public boolean andar( double distancia ) {
+	public double andar( double distancia ) {
 		
 		// Verificar se tem combustivel para a distancia que se pretende andar 
 		if( distancia < obterAutonomia() ) {
 			
-			quantidadeCombustivel -= getConsumo() * (distancia / 100); 
-			return true;
+			quantidadeCombustivel = quantidadeCombustivel - getConsumo() * (distancia / 100); 
+			return distancia;
 		}
 		else {
+			// Andar até parar porque fica sem combustível 
 			
-			// Aqui ou simplesmente não percorre qualquer distancia 
-			// ou anda até parar porque fica sem combustível 
-			return false;
+			double distanciaPercorrida = obterAutonomia();
+			quantidadeCombustivel = 0;
+			
+			return distanciaPercorrida;
 		}
 			
 			
