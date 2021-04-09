@@ -13,7 +13,13 @@ public class Principal {
 		else 
 			System.out.println("Carro mal construído");
 		
-
+		
+		
+		if ( testarMeterCombustivelAtestar() )
+			System.out.println( "Está a Atestar bem o carro");
+		else
+			System.out.println( "Está a Atestar mal o carro");
+		
 	}
 	
 	private static boolean testarConstrucaoCarro() {
@@ -41,7 +47,19 @@ public class Principal {
 	
 	private static boolean testarMeterCombustivelAtestar() {
 		
-		return false;
+		Carro herbie = new Carro();
+		
+		double combustivelAntesAtestar = herbie.getQuantidadeCombustivel();
+		
+		// Atestar o depósito de combustível
+		double quantidadeMetidaDeposito = herbie.meterCombustivel();
+		
+		if ( ( herbie.getQuantidadeCombustivel() == herbie.getCapacidadeDeposito() ) && 
+				( herbie.getQuantidadeCombustivel() - combustivelAntesAtestar == quantidadeMetidaDeposito )	)
+			return true;
+		else 
+			return false;
+		
 	}
 	
 	private static boolean testarAndar() {
